@@ -2,7 +2,7 @@ package com.practice.questions;
 
 import java.util.Arrays;
 
-class GreedyAlgo1 {
+class MinimumWaitingTime {
 
     public static void main(String[] args) {
         int [] array = {3,2,1,2,6};
