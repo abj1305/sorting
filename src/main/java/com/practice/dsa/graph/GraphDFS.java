@@ -7,11 +7,12 @@ class MyGraph {
 	private int noOfVertices;
 	private LinkedList<Integer> [] adjList;
 	
+	
 	MyGraph(int noOfVertices) {
 		this.noOfVertices = noOfVertices;
 		adjList = new LinkedList[noOfVertices];
 		for(int i = 0; i<noOfVertices;i++) {
-			adjList[i] = new LinkedList();
+			adjList[i] = new LinkedList<Integer>();
 		}
 	}
 	
