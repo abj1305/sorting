@@ -1,72 +1,64 @@
 package com.practice.questions;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Questions {
 
-	// Do not edit the class below except
-	// for the depthFirstSearch method.
-	// Feel free to add new properties
-	// and methods to the class.
-	static class Node {
-		String name;
-		List<Node> children = new ArrayList<Node>();
+	public static void main(String args []) {
 
-		public Node(String name) {
-			this.name = name;
-		}
-		public List<String> depthFirstSearch(List<String> array) {
-			array.add(name);
-			children.stream().forEach(e -> e.depthFirstSearch(array));
-			return array;
-		}
-
-		public Node addChild(String name) {
-			Node child = new Node(name);
-			children.add(child);
-			return this;
-		}
+		Set<Integer> set = new HashSet<Integer>();
+		
+		
+		
+		
 	}
 
-	public static void main(String args []) {
-			int [] array = {1, 2, 3, 4, -2, 3, 7, 8, -26};
-			boolean b = hasSingleCycle(array);
-			System.out.println(b);
-			
+	public String[] commonCharacters(String[] strings) {
+		
+		String [] stringsWithUniqueChars = new String[strings.length];
+		for(int i = 0;i<strings.length;i++) {
+			stringsWithUniqueChars[i] = getUniqueCharString(strings[i]);
+		}
+	    
+		Map<Character, Integer> charMap = new HashMap<Character, Integer>();
+		
+		for(String str : stringsWithUniqueChars) {
+			for(int i = 0; i < str.length();i++) {
+				if(charMap.containsKey(str.charAt(i))) {
+					charMap.put(str.charAt(i), charMap.get(str.charAt(i))+1);
+				}
+				else {
+					charMap.put(str.charAt(i),1);
+				}
+			}
+		}
+		
+		List<String> returnList = new ArrayList<String>();
+		for(Character key : charMap.keySet()) {
+			if(charMap.get(key) == strings.length) {
+				returnList.add(String.valueOf(key));
+			}
+		}
+		
+	    return returnList.toArray(new String[returnList.size()]);
 	}
 	
-	 public static boolean hasSingleCycle(int[] array) {
-		    int size = array.length;
-		    boolean [] visited = new boolean[size];
-		    int index = 0;
-		    for(int i = 0 ; i< array.length; i++) {
-		      if(visited[index] == false) {
-		        visited[index] = true;
-		        index = getIndex(index, size, array[index]);
-		      }
-		      else{
-		        return false;
-		      }
-		    }
-		    
-		    for(Boolean b : visited) {
-		      if(!b) {
-		        return false;
-		      }
-		    }
-		    return true && index%size ==0;
-		  }
-		  private static int getIndex(int current, int size, int jump) {
-		    if(current + jump > 0 &&  current + jump < size) {
-		      return current+jump;
-		    }
-		    if(current+jump < 0) {
-		      return size  + (current+(jump%size)); 
-		    }
-		    if(current+jump > size-1) {
-		      return ((current+jump) % (size));
-		    }
-		    return 0;
-		  }
-
+	private String getUniqueCharString(String str) {
+		Set<Character> set = new HashSet<Character>();
+		for(int i = 0 ;i<str.length();i++) {
+			set.add(str.charAt(i));
+		}
+		StringBuilder sb = new StringBuilder("");
+		for(Character character : set) {
+			sb.append(character);
+		}
+		
+		return sb.toString();
+	}
+	
 }
