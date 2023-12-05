@@ -1,5 +1,6 @@
 package com.practice.java8;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +23,10 @@ public class FP03Functional {
 		System.out.println("------------------------------------");
 		System.out.println(obj.doubleList(List.of(1,2,3,4,5)));
 		System.out.println("----------------------------------------");
+		int [] array = {5,6,3,4,8,7,9,10};
+		System.out.println(
+				Arrays.stream(array).boxed().sorted((x,y) -> y-x).skip(1).findFirst().get()
+				);
 		
 	}
 	
