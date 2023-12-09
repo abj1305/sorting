@@ -2,17 +2,19 @@ package com.practice.corejava;
 
 public class StringBasics1 {
 
+	public StringBasics1() {
+		System.out.println("Default constr in StringBasic1");
+	}
+	
+	public StringBasics1(String str) {
+		System.out.println("Parameterized constr in StringBasic1");
+	}
+	
 	public static void main(String[] args) {
 		
-		String s1 = "Abhijeet";
-		String s2 = "Abhijeet";
+		StringBasics1 s = new StringBasics1("s");
+		//StringBasics1 s1 = new StringBasics1();
 		
-		System.out.println(s1 == s2);
-		
-		String s3 = new String("Abhijeet");
-		String s4 = new String("Abhijeet");
-		
-		System.out.println(s3 == s4);
 
 	}
 
