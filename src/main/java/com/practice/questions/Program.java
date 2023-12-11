@@ -3,19 +3,47 @@ package com.practice.questions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 class Program {
 	
 	public static void main(String args []) {
-		List<Integer> jobs = List.of(1,2,3,4);
+		List<Integer> jobs = List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
 		List<Integer[]> deps = new ArrayList<Integer[]>();
-		deps.add(new Integer[]{1,2});
-		deps.add(new Integer[]{1,3});
-		deps.add(new Integer[]{3,2});
-		deps.add(new Integer[]{4,2});
-		deps.add(new Integer[]{4,3});
+		deps.add(new Integer[]{1, 2});
+		deps.add(new Integer[]{1, 3});
+		deps.add(new Integer[]{1, 4});
+		deps.add(new Integer[]{1, 5});
+		deps.add(new Integer[]{1, 6});
+		deps.add(new Integer[]{1, 7});
+		deps.add(new Integer[]{2, 8});
+		deps.add(new Integer[]{3, 8});
+		deps.add(new Integer[]{4, 8});
+		deps.add(new Integer[]{5, 8});
+		deps.add(new Integer[]{6, 8});
+		deps.add(new Integer[]{7, 8});
+		deps.add(new Integer[]{2, 3});
+		deps.add(new Integer[]{2, 4});
+		deps.add(new Integer[]{5, 4});
+		deps.add(new Integer[]{7, 6});
+		deps.add(new Integer[]{6, 2});
+		deps.add(new Integer[]{6, 3});
+		deps.add(new Integer[]{6, 5});
+		deps.add(new Integer[]{5, 9});
+		deps.add(new Integer[]{9, 8});
+		deps.add(new Integer[]{8, 0});
+		deps.add(new Integer[]{4, 0});
+		deps.add(new Integer[]{5, 0});
+		deps.add(new Integer[]{9, 0});
+		deps.add(new Integer[]{2, 0});
+		deps.add(new Integer[]{3, 9});
+		deps.add(new Integer[]{3, 10});
+		deps.add(new Integer[]{10, 11});
+		deps.add(new Integer[]{11, 12});
+		deps.add(new Integer[]{2, 12});
 		
 		System.out.println(
 				topologicalSort(jobs, deps)
@@ -35,12 +63,21 @@ class Program {
 			graph[i] = new ArrayList<Integer>();  
 		}
 
-		for(Integer [] arr : deps) {
-			graph[arr[0]-1].add(arr[1]-1);
+		if(! jobs.contains(0)) {
+			for(Integer [] arr : deps) {
+				graph[arr[0]-1].add(arr[1]-1);
+			}
 		}
-		
-		
+		else {
+			for(Integer [] arr : deps) {
+				graph[arr[0]].add(arr[1]);
+			}
+		}
 
+        if(isGraphCyclic(graph)) {
+          return new ArrayList<Integer>();
+        }
+    
 		boolean visited [] = new boolean[jobs.size()];
 		for(int i = 0; i < jobs.size();i++){
 			if(!visited[i]) {
@@ -49,15 +86,63 @@ class Program {
 		}
 
 		for(int j = 0 ;j<stack.size();j++) {
-			list.add(stack.pop()+1);
+			if(jobs.contains(0)) {
+				list.add(stack.pop());
+			}
+			else {
+				list.add(stack.pop()+1);
+			}
+			
 		}
 		while(!stack.isEmpty()) {
-			list.add(stack.pop()+1);
+			if(jobs.contains(0)) {
+				list.add(stack.pop());
+			}
+			else {
+				list.add(stack.pop()+1);
+			}
+			
 		}
 
 		return list;
 	}
 
+    public static boolean isGraphCyclic(ArrayList<Integer> [] graph) {
+
+		boolean [] visited = new boolean[graph.length];
+		Set<Integer> ancestors = new HashSet<Integer>();
+		boolean flag = false;
+		
+		for(int i = 0;i< graph.length;i++) {
+			flag = isCyclic(graph, i, visited, ancestors); 
+			if(flag) {
+				break;
+			}
+		}
+		
+		return flag;
+
+	}
+
+	public static boolean isCyclic(ArrayList<Integer> [] graph, Integer vertex, boolean [] visited, Set<Integer> ancestors) {
+		boolean flag = false;
+		visited[vertex] = true;
+		if(ancestors.contains(vertex)) {
+			return true;
+		}
+		ancestors.add(vertex);
+		for(Integer child: graph[vertex]) {
+
+			//if(!visited[child]) {
+			flag = isCyclic(graph, child, visited, ancestors);
+			if(flag) return true;
+			//}
+		}
+		ancestors.remove(vertex);
+		return false;
+
+	}
+  
 	public static void sort(int i, boolean []visited, List<Integer>jobs, 
 			ArrayList<Integer> [] graph, Stack<Integer> stack) {
 		visited[i] = true;
@@ -68,10 +153,6 @@ class Program {
 		}
 
 		stack.push(i);
-	}
-	
-	public boolean isGraphCyclic(ArrayList<Integer> [] graph) {
-		return true;
 	}
 }
 
