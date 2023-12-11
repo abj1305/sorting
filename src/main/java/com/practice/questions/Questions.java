@@ -17,41 +17,26 @@ public class Questions {
 		Questions q = new Questions();
 
 		ArrayList<ArrayList<Integer>> adj = new ArrayList<ArrayList<Integer>>();
-		adj.add(new ArrayList(Arrays.asList(0,1)));
-		adj.add(new ArrayList(Arrays.asList(1,2)));
-		adj.add(new ArrayList(Arrays.asList(1,4)));
-		adj.add(new ArrayList(Arrays.asList(2,3)));
-		adj.add(new ArrayList(Arrays.asList(3,4)));
+		adj.add(new ArrayList());
+		adj.add(new ArrayList(Arrays.asList(2)));
+		adj.add(new ArrayList(Arrays.asList(3)));
+		adj.add(new ArrayList(Arrays.asList()));
+		adj.add(new ArrayList());
 
 
 
 		System.out.println(
-				q.isCycle(5, adj)
+				q.isCycle(4, adj)
 				);
 	}
 
 	//https://www.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1?page=1&category=DFS&sortBy=submissions
 	public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
 
-		ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+		
 		for(int i=0;i<V;i++) {
-			graph.add(new ArrayList<Integer>());
-		}
-		int l,r;
-		for(int i=0;i<adj.size();i++) {
-			l = adj.get(i).get(0);
-			r = adj.get(i).get(1);
-			if(! graph.get(l).contains(r)) {
-				graph.get(l).add(r);
-			}
-			if(! graph.get(r).contains(l)) {
-				graph.get(r).add(l);
-			}
-		}
-
-		Set<Integer> ancestors = new HashSet<Integer>();
-		for(int i=0;i<V;i++) {
-			if(isCycle(i, ancestors, graph)) {
+			Set<Integer> ancestors = new HashSet<Integer>();
+			if(isCycle(i, ancestors, adj)) {
 				return true;
 			}
 		}
