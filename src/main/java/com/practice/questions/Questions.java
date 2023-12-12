@@ -17,46 +17,46 @@ public class Questions {
 		Questions q = new Questions();
 
 		ArrayList<ArrayList<Integer>> adj = new ArrayList<ArrayList<Integer>>();
-		adj.add(new ArrayList());
-		adj.add(new ArrayList(Arrays.asList(2)));
+		adj.add(new ArrayList(Arrays.asList(1)));
+		adj.add(new ArrayList(Arrays.asList(2,4)));
 		adj.add(new ArrayList(Arrays.asList(3)));
-		adj.add(new ArrayList(Arrays.asList()));
+		adj.add(new ArrayList(Arrays.asList(4)));
 		adj.add(new ArrayList());
 
 
 
 		System.out.println(
-				q.isCycle(4, adj)
+				q.isCycle(5, adj)
 				);
 	}
 
 	//https://www.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1?page=1&category=DFS&sortBy=submissions
-	public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
+	Boolean checkForCycle(int node, int parent, boolean vis[], ArrayList<ArrayList<Integer>> adj) {
+		vis[node] = true; 
 
-		
-		for(int i=0;i<V;i++) {
-			Set<Integer> ancestors = new HashSet<Integer>();
-			if(isCycle(i, ancestors, adj)) {
-				return true;
+		for(Integer it: adj.get(node)) {
+			if(vis[it] == false) {
+				if(checkForCycle(it, node, vis, adj) == true) 
+					return true; 
+			}
+			else if(it!=parent) 
+				return true; 
+		}
+		return false; 
+	}
+
+	public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
+		boolean vis[] = new boolean[V];
+
+		for(int i = 0;i<V;i++) {
+			if(vis[i] == false) {
+				if(checkForCycle(i, -1, vis, adj))
+					return true; 
 			}
 		}
-		return false;
-
+		return false; 
 	}
 
-	public boolean isCycle(int vertex, Set<Integer> ancestors, ArrayList<ArrayList<Integer>> graph) {
-
-		if(ancestors.contains(vertex)) {
-			return true;
-		}
-		ancestors.add(vertex);
-		for(Integer child : graph.get(vertex)) {
-			return isCycle(child, ancestors, graph);
-		}
-		ancestors.remove(vertex);
-		return false;
-
-	}
 
 	public static String reverseWord(String str)
 	{
