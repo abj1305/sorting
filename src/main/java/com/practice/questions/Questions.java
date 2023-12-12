@@ -8,7 +8,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 import java.util.TreeSet;
+
+class Node
+{
+	int data;
+	Node next;
+	
+	Node(int d)
+	{
+		data = d;
+		next = null;
+	}
+}
 
 public class Questions {
 
@@ -16,47 +29,73 @@ public class Questions {
 
 		Questions q = new Questions();
 
-		ArrayList<ArrayList<Integer>> adj = new ArrayList<ArrayList<Integer>>();
-		adj.add(new ArrayList(Arrays.asList(1)));
-		adj.add(new ArrayList(Arrays.asList(2,4)));
-		adj.add(new ArrayList(Arrays.asList(3)));
-		adj.add(new ArrayList(Arrays.asList(4)));
-		adj.add(new ArrayList());
-
-
-
-		System.out.println(
-				q.isCycle(5, adj)
-				);
+		
+		Node one = new Node(1);
+		Node two = new Node(2);
+		Node three = new Node(3);
+		Node four = new Node(4);
+		Node five = new Node(3);
+		Node six = new Node(2);
+		Node seven = new Node(1);
+		one.next = two;
+		two.next = three;
+		three.next = four;
+		four.next = five;
+		five.next = six;
+		six.next = seven;
+		boolean condition = q.isPalindrome(one);
+		System.out.println("isPalidrome :" + condition);
+		
 	}
 
+	// https://www.geeksforgeeks.org/problems/check-if-linked-list-is-pallindrome/1?page=1&category=Linked%20List&difficulty=Medium&sortBy=submissions
+	boolean isPalindrome(Node head) 
+    {
+		Stack<Integer> stack = new Stack<Integer>();
+        Node tail = head;
+        while(tail != null) {
+            stack.push(tail.data);
+        	tail = tail.next;
+            
+        }
+        while(head !=null){
+        	if(! stack.pop().equals(head.data)) {
+        		return false;
+        	}
+        	else {
+        		head = head.next;
+        	}
+        }
+        return true;
+    }    
+	
 	//https://www.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1?page=1&category=DFS&sortBy=submissions
-	Boolean checkForCycle(int node, int parent, boolean vis[], ArrayList<ArrayList<Integer>> adj) {
-		vis[node] = true; 
-
-		for(Integer it: adj.get(node)) {
-			if(vis[it] == false) {
-				if(checkForCycle(it, node, vis, adj) == true) 
-					return true; 
-			}
-			else if(it!=parent) 
-				return true; 
-		}
-		return false; 
-	}
-
 	public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
-		boolean vis[] = new boolean[V];
-
-		for(int i = 0;i<V;i++) {
-			if(vis[i] == false) {
-				if(checkForCycle(i, -1, vis, adj))
-					return true; 
+		boolean visited [] = new boolean [V];
+		for(int i=0;i<V;i++) {
+			if(!visited[i]) {
+				if(isCyclic(i, -1,adj, visited)) {
+					return true;
+				}
 			}
 		}
-		return false; 
+		return false;
 	}
-
+	
+	public boolean isCyclic(int vertex, int parent, ArrayList<ArrayList<Integer>> adj, boolean[] visited) {
+		visited[vertex] = true;
+		for(Integer child : adj.get(vertex)) {
+			if(!visited[child]) {
+				if (isCyclic(child, vertex, adj, visited)) {
+					return true;
+				}
+			}
+			else if(child != parent){
+				return true;
+			}	
+		}
+		return false;
+	}
 
 	public static String reverseWord(String str)
 	{
