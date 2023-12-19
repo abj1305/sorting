@@ -1,4 +1,4 @@
-package com.practice.dsa.graph.anuj;
+package com.practice.dsa.anuj.binarytree;
 
 import java.util.ArrayList;
 import java.util.Arrays;
