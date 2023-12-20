@@ -9,7 +9,7 @@ public class GraphUndirectedCycle {
 
 	}
 	
-	public static boolean isCycle(int V, ArrayList<ArrayList> adj) {
+	public static boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
 		
 		boolean [] visited = new boolean[V];
 		for(int i = 0; i<V;i++) {
