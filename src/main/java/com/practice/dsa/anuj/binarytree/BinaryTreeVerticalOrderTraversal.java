@@ -1,12 +1,12 @@
 package com.practice.dsa.anuj.binarytree;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 class Pairr {
 	public int hd;
@@ -24,8 +24,18 @@ public class BinaryTreeVerticalOrderTraversal {
 	public static void main(String args[]) {
 		sc = new Scanner(System.in);
 		Node root = createTree();
-		Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
-
+		Map<Integer, List<Integer>> map = new TreeMap<Integer, List<Integer>>();
+		verticalOrderTraversal(root, map);
+		
+		List<Integer> list = new ArrayList<Integer>();
+		
+		
+		for(Map.Entry<Integer, List<Integer>> entry : map.entrySet()) {
+			list.addAll(entry.getValue());
+		}
+		
+		System.out.println(list);
+		
 	}
 	
 	public static Node createTree() {
@@ -61,7 +71,13 @@ public class BinaryTreeVerticalOrderTraversal {
 			else {
 				List<Integer> list = new ArrayList<Integer>();
 				list.add(pair.node.data);
-				map.put(pair, list);
+				map.put(pair.hd, list);
+			}
+			if(pair.node.left != null) {
+				q.add(new Pairr(pair.hd-1, pair.node.left));
+			}
+			if(pair.node.right != null) {
+				q.add(new Pairr(pair.hd+1, pair.node.right));
 			}
 		}
 		
