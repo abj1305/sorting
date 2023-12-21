@@ -2,7 +2,7 @@ package com.practice.dsa.anuj.graph;
 
 import java.util.ArrayList;
 
-public class GraphUndirectedCycle {
+public class GraphCycleUndirected {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

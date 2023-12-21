@@ -2,7 +2,7 @@ package com.practice.dsa.anuj.graph;
 
 import java.util.ArrayList;
 
-public class GraphDirectedCycle {
+public class GraphCycleDirected {
 
 	public static void main(String[] args) {
 
