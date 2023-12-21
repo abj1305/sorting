@@ -20,7 +20,11 @@ public class GraphTopologicalSortUsingDFS {
 			}
 		}
 		
-		
+		int [] ans = new int [v];
+		int index = 0;
+		while(!stack.isEmpty()) {
+			ans[index++] = stack.pop();
+		}
 	}
 	
 	public static void topologicalSort(ArrayList<ArrayList<Integer>> adj, int v, 
