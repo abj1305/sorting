@@ -21,11 +21,11 @@ public class GraphCycleDirected {
 		visited[v] = true;
 		recS[v] = true;
 		
-		for(Integer n : adj.get(v)) {
-			if(! visited[n]) {
-				if(dfs(n, adj, visited, recS)) return true;
+		for(Integer neighbor : adj.get(v)) {
+			if(! visited[neighbor]) {
+				if(dfs(neighbor, adj, visited, recS)) return true;
 			}
-			else if(recS[n]) {
+			else if(recS[neighbor]) {
 				return true;
 			}
 		}
