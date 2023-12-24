@@ -15,6 +15,8 @@ class Node
 {
 	int data;
 	Node next;
+	Node left;
+	Node right;
 	
 	Node(int d)
 	{
@@ -47,6 +49,88 @@ public class Questions {
 		System.out.println("isPalidrome :" + condition);
 		
 	}
+	
+	//https://www.geeksforgeeks.org/problems/check-for-bst/1?page=1&category=Binary%20Search%20Tree&sortBy=submissions
+	boolean isBST(Node root) {
+		int min = Integer.MIN_VALUE;
+		int max = Integer.MAX_VALUE;
+		return isInRange(root, min, max);
+	}
+	
+	boolean isInRange(Node node , int min, int max) {
+		if(node == null) {
+			return true;
+		}
+		if(! isInRange(node.left, min, node.data -1)) {
+			return false;
+		}
+		if(node.data < min || node.data > max) {
+			return false;
+		}
+		return isInRange(node.right, node.data + 1, max);
+	}
+	
+	//https://www.geeksforgeeks.org/problems/delete-a-node-from-bst/1?page=1&category=Binary%20Search%20Tree&sortBy=submissions
+	public static Node deleteNode(Node root, int X) {
+        if(root == null) {
+            return root;
+        }
+        if(X < root.data) {
+            root.left = deleteNode(root.left, X);
+        }
+        else if(X > root.data) {
+            root.right = deleteNode(root.right, X);
+        }
+        else{
+            if(root.left == null) return root.right;
+            else if(root.right == null) return root.left;
+            else{
+                root.data = min(root.right);
+                root.right = deleteNode(root.right, root.data);
+            }
+            
+        }
+        return root;
+    }
+    private static int min(Node node) {
+	    	if(node.left != null) {
+	    		return min(node.left);
+	    	}
+	    	else {
+	    		return node.data;
+	    	}
+    }
+	
+	
+	//https://www.geeksforgeeks.org/problems/insert-a-node-in-a-bst/1?page=1&category=Binary%20Search%20Tree&sortBy=submissions
+    Node insert(Node root, int Key) {
+        Node prev = null;
+        Node cur = root;
+        Node newNode = new Node(Key);
+        while(cur != null) {
+        	prev = cur;
+        	if(cur.data > Key) {
+        		cur = cur.left;
+        	}
+        	else if(cur.data < Key) {
+        		cur = cur.right;
+        	}
+        	else {
+        		return root;
+        	}
+        }
+        if(prev == null) {
+        	root = newNode;
+        }
+        if(prev.data > Key) {
+        	prev.left = newNode;
+        }
+        else if(prev.data < Key){
+        	prev.right = newNode;
+        }
+        return root;
+    }
+	
 
 	// https://www.geeksforgeeks.org/problems/check-if-linked-list-is-pallindrome/1?page=1&category=Linked%20List&difficulty=Medium&sortBy=submissions
 	boolean isPalindrome(Node head) 

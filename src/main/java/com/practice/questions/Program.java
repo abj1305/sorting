@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
-class Program {
-	
+//import com.practice.dsa.anuj.bst.Node;
+
+class Program3 {
+
 	public static void main(String args []) {
 		List<Integer> jobs = List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
 		List<Integer[]> deps = new ArrayList<Integer[]>();
@@ -44,11 +46,11 @@ class Program {
 		deps.add(new Integer[]{10, 11});
 		deps.add(new Integer[]{11, 12});
 		deps.add(new Integer[]{2, 12});
-		
+
 		System.out.println(
 				topologicalSort(jobs, deps)
 				);
-		
+
 	}
 
 	public static List<Integer> topologicalSort(
@@ -74,10 +76,10 @@ class Program {
 			}
 		}
 
-        if(isGraphCyclic(graph)) {
-          return new ArrayList<Integer>();
-        }
-    
+		if(isGraphCyclic(graph)) {
+			return new ArrayList<Integer>();
+		}
+
 		boolean visited [] = new boolean[jobs.size()];
 		for(int i = 0; i < jobs.size();i++){
 			if(!visited[i]) {
@@ -92,7 +94,7 @@ class Program {
 			else {
 				list.add(stack.pop()+1);
 			}
-			
+
 		}
 		while(!stack.isEmpty()) {
 			if(jobs.contains(0)) {
@@ -101,28 +103,28 @@ class Program {
 			else {
 				list.add(stack.pop()+1);
 			}
-			
+
 		}
 
 		return list;
 	}
 
-	
-	
-	
-    public static boolean isGraphCyclic(ArrayList<Integer> [] graph) {
+
+
+
+	public static boolean isGraphCyclic(ArrayList<Integer> [] graph) {
 
 		boolean [] visited = new boolean[graph.length];
 		Set<Integer> ancestors = new HashSet<Integer>();
 		boolean flag = false;
-		
+
 		for(int i = 0;i< graph.length;i++) {
 			flag = isCyclic(graph, i, visited, ancestors); 
 			if(flag) {
 				break;
 			}
 		}
-		
+
 		return flag;
 
 	}
@@ -145,7 +147,7 @@ class Program {
 		return false;
 
 	}
-  
+
 	public static void sort(int i, boolean []visited, List<Integer>jobs, 
 			ArrayList<Integer> [] graph, Stack<Integer> stack) {
 		visited[i] = true;
@@ -201,3 +203,116 @@ class Program2 {
 		return true;
 	}
 }
+
+
+
+
+class Program {
+	
+	
+	public static void main(String args[]) {
+		BST b = new BST(10);
+		b.left = new BST(5);
+		
+		b.remove(10);
+		
+		System.out.println(b);
+	}
+	
+	static class BST {
+	    public int value;
+	    public BST left;
+	    public BST right;
+
+	    public BST(int value) {
+	      this.value = value;
+	    }
+
+	    public BST insert(int value) {
+	      return insert(this, value);
+	    }
+	    
+	    private BST insert(BST node, int value) {
+	    	BST prev = null;
+	    	BST cur = node;
+	    	BST newNode = new BST(value);
+	    	
+	    	while(cur != null) {
+	    		prev = cur;
+	    		if(value < cur.value) {
+	    			cur = cur.left;
+	    		}
+	    		else {
+	    			cur = cur.right;
+	    		}
+	    	}
+	    	if(prev == null) {
+	    		node = newNode;
+	    	}
+	    	else {
+	    		if(prev.value > value) {
+	    			prev.left = newNode;
+	    		}
+	    		else {
+	    			prev.right = newNode;
+	    		}
+	    	}
+	    	return node;
+	    }
+
+	    public boolean contains(int value) {
+	      return contains(this, value);
+	    }
+	    private boolean contains(BST node, int value) {
+	    	BST cur = node;
+	    	while(cur != null) {
+	    		if(cur.value == value) {
+	    			return true;
+	    		}
+	    		else if(cur.value > value) {
+	    			cur = cur.left;
+	    		}
+	    		else {
+	    			cur = cur.right;
+	    		}
+	    	}
+	    	return false;
+	    }
+	    public BST remove(int value) {
+	    	if(this.left == null && this.right == null) {
+	    		return this;
+	    	}
+	    	return remove(this, value);
+	    }
+	    private BST remove(BST node, int value) {
+	    	if(node == null) {
+	    		return node;
+	    	}
+	    	if(node.value > value) {
+	    		node.left = remove(node.left, value);
+	    	}
+	    	else if(node.value < value) {
+	    		node.right = remove(node.right, value);
+	    	}
+	    	else {
+	    		if(node.left == null) return node.right;
+	    		else if(node.right == null) return node.left;
+	    		else {
+	    			node.value = min(node.right);
+	    			node.right = remove(node.right, node.value);
+	    		}
+	    	}
+	    	return node;
+	    }
+	    private int min(BST node) {
+	    	if(node.left != null) {
+	    		return min(node.left);
+	    	}
+	    	else {
+	    		return node.value;
+	    	}
+	    }
+	}
+}
+
+
