@@ -29,26 +29,93 @@ public class Questions {
 
 	public static void main(String args []) {
 
-		Questions q = new Questions();
-
 		
-		Node one = new Node(1);
-		Node two = new Node(2);
-		Node three = new Node(3);
-		Node four = new Node(4);
-		Node five = new Node(3);
-		Node six = new Node(2);
-		Node seven = new Node(1);
-		one.next = two;
-		two.next = three;
-		three.next = four;
-		four.next = five;
-		five.next = six;
-		six.next = seven;
-		boolean condition = q.isPalindrome(one);
-		System.out.println("isPalidrome :" + condition);
+		Questions q = new Questions();
+		int [] arr = {1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9} ;
+		q.minJumps(arr);
 		
 	}
+	
+	
+	//https://www.geeksforgeeks.org/problems/minimum-number-of-jumps-1587115620/1?page=1&sortBy=submissions
+    static int minJumps(int[] arr){
+        int cur=0, count=0;
+        while(cur < arr.length) {
+        	int max = 0;
+        	for(int i=cur ; i<cur+arr[cur] && i < arr.length ; i++) {
+        		if(arr[i] > max) {
+        			max = arr[i];
+        		}
+        	}
+        	if(cur+max >= arr.length) {
+        		return ++count;
+        	}
+        	if(arr[cur+max] == 0) {
+        		max--;
+        	}
+        	cur = cur + max;
+        	count++;
+        }
+        return count;
+        
+    }
+	
+	
+	// https://www.geeksforgeeks.org/problems/angle-between-hour-and-minute-hand0545/1?page=1&company=Salesforce&sortBy=submissions
+	static int getAngle(int hour , int minute) {
+        // code here
+        float m = minute*6;
+        float c = ((float)minute/60) * 30;
+        float h = hour*30 + c;
+        float ans = Math.abs(h-m);
+        float b = 360 - ans;
+        return (int)Math.floor((Math.min(ans,b)));
+        
+    }
+	
+	//https://www.geeksforgeeks.org/problems/count-pairs-with-given-sum5022/1?page=1&company=Salesforce&sortBy=submissions
+    int getPairsCount(int[] arr, int pairs, int k) {
+        pairs = 0;
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for(int i : arr) {
+        	int t = k-i;
+        	if(map.containsKey(t)) {
+        		pairs = pairs + map.get(t);
+        	}
+        	if(map.containsKey(i)) {
+        		map.put(i, map.get(i)+1);
+        	}
+        	else {
+        		map.put(i, 1);
+        	}
+        }
+        return pairs;
+    }
+	
+	//https://www.geeksforgeeks.org/problems/find-k-th-smallest-element-in-bst/1?page=1&category=Binary%20Search%20Tree&sortBy=submissions
+    static int k;
+	public int KthSmallestElement(Node root, int K) {
+		k=K;
+    	int e = kthSmallest(root);
+    	return e;
+    }
+    private int kthSmallest(Node node) {
+    	if(node.left!=null) {
+    		int n = kthSmallest(node.left); 
+    		if(n>0) {
+    			return n;
+    		}
+    	}
+    	k = k-1;
+    	if(k == 0) return node.data;
+    	if(node.right != null) {
+    		int n = kthSmallest(node.right);
+    		if(n>0) {
+    			return n;
+    		}
+    	}
+    	return -1;
+    }
 	
 	//https://www.geeksforgeeks.org/problems/check-for-bst/1?page=1&category=Binary%20Search%20Tree&sortBy=submissions
 	boolean isBST(Node root) {
