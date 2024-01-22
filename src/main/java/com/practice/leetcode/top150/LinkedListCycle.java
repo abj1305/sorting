@@ -4,7 +4,7 @@ package com.practice.leetcode.top150;
 
 class ListNode {
 	int val;
-	ListNode next;
+	ListNodee next;
 	ListNode(int x) {
 		val = x;
 		next = null;
@@ -19,10 +19,10 @@ public class LinkedListCycle {
 
 	}
 
-	public boolean hasCycle(ListNode head) {
+	public boolean hasCycle(ListNodee head) {
 		
-		ListNode fast = head;
-		ListNode slow = head;
+		ListNodee fast = head;
+		ListNodee slow = head;
 		
 		while(fast != null && slow != null) {
 			slow = slow.next;
