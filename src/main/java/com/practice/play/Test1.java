@@ -1,13 +1,19 @@
 package com.practice.play;
 
+
+
 public class Test1 {
 
+	public static void print (Greeting greetint) {
+		greetint.greet();
+	}
+	
 	public static void main(String[] args) {
-		int a = 5;
-		int b = 6;
-		
-		System.out.println(a & b);
-
+		System.out.format("%.3f is my favourite no", 3.1238);
+		print(() -> System.out.println("Hello"));
+		Greeting.method2();
+		Greeting g = new GreetingChild();
+		g.method1();
 	}
 
 }
