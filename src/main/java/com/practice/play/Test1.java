@@ -3,6 +3,7 @@ package com.practice.play;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Test1 {
@@ -42,6 +43,11 @@ public class Test1 {
 		
 		System.out.println(sortedList);
 		
+		
+		List<String> list2 = List.of("India", "Japan", "US", "UK", "Sri Lanka");
+	
+		Map<Integer, List<String>> map = list2.stream().collect(Collectors.groupingBy(String :: length));
+		System.out.println(map);
 	}
 
 }
