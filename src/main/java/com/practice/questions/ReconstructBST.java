@@ -1,7 +1,6 @@
 package com.practice.questions;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ReconstructBST {
 	static class BST {
@@ -15,17 +14,13 @@ public class ReconstructBST {
 	}
 
 	public static void main(String args[]) {
-		ArrayList<Integer> list = new  ArrayList();
-		list.add(10);
-		list.add(4);
-		list.add(2);
-		list.add(1);
-		list.add(5);
+		ArrayList<Integer> list = new ArrayList<Integer>();
 		list.add(17);
 		list.add(19);
 		list.add(18);
 		ReconstructBST r = new ReconstructBST();
-		r.reconstructBst(list);
+		BST bst = r.reconstructBst(list);
+		System.out.println(bst);
 	}
 	
 	public BST reconstructBst(ArrayList<Integer> preOrderTraversalValues) {
@@ -33,17 +28,17 @@ public class ReconstructBST {
 	}
 	
 	public BST reconstruct(ArrayList<Integer> preOrderTraversalValues, int start, int end) {
-		if(start > end || start >= preOrderTraversalValues.size() || end >= preOrderTraversalValues.size()) return null;
+		if(start > end) return null;
 		BST node = new BST(preOrderTraversalValues.get(start));
-		int rs = -1;
-		for(int i = start+1 ; i < preOrderTraversalValues.size(); i++) {
-			if(preOrderTraversalValues.get(i) > node.value) {
-				rs = i;
-				break;
+		int leftEnd = start;
+		for(int i = start + 1 ; i <= end;i++) {
+			if(preOrderTraversalValues.get(i) < node.value) {
+				leftEnd = i;
 			}
 		}
-		node.left = reconstruct(preOrderTraversalValues, start+1, rs-1);
-		node.right = reconstruct(preOrderTraversalValues, rs, end);
+		node.left = reconstruct(preOrderTraversalValues, start+1, leftEnd);
+		node.right = reconstruct(preOrderTraversalValues, leftEnd+1, end);
 		return node;
+		
 	}
 }
