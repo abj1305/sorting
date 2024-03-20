@@ -1,5 +1,6 @@
 package com.practice.play;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,16 @@ public class Play {
 		
 		List <String>list3 = list1.stream().filter(p -> list2.contains(p)).collect(Collectors.toList());
 		System.out.println(list3);
+		
+		List<Integer> list = List.of(2,1,4,3,7,-1);
+		System.out.println(
+				list.stream().mapToInt(Integer :: intValue).min().getAsInt()
+				);
+		
+		System.out.println(
+				list1.stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList())
+				);
+		
 
 	
 	}
